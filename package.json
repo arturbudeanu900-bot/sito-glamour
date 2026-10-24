@@ -8,7 +8,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "images": "node scripts/fetch-images.mjs",
+    "draw": "node scripts/draw-images.cjs",
     "artifact": "vite build --mode artifact && node scripts/make-artifact.mjs"
   },
   "dependencies": {

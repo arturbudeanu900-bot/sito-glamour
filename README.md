@@ -27,17 +27,26 @@ In cima a `src/MariannaJ.tsx`:
 - `WA_NUMBER` e `PHONE`: sono gli stessi valori del sito precedente (`390110000000`, `+39 011 000 0000`) e vanno sostituiti con i numeri reali.
 - `INSTAGRAM` e `FACEBOOK`: link ai profili della boutique.
 - `ITEMS`: capi, prezzi, composizioni e disponibilità per taglia sono contenuti di esempio.
-- `LOOKS[].pins`: posizione degli hotspot in percentuale sulla foto originale.
+- `LOOKS[].pins`: posizione degli hotspot in percentuale sull'immagine originale.
+
+## Immagini
+
+Le immagini in `public/img/` sono illustrazioni dell'atelier generate in codice (non fotografie):
+capi in stile "ghost mannequin" su fondale da studio e figurini per hero e lookbook.
+
+```bash
+NODE_PATH=$(npm root -g) npm run draw   # rigenera public/img con Playwright e stampa le coordinate dei pin
+```
+
+Per passare a foto reali sostituisci i file mantenendo gli stessi nomi (`c1.jpg` … `a3.jpg`, `look-01.jpg`,
+`look-02.jpg`, `hero.jpg`) e aggiorna `w`, `h`, `pos` e `pins` dei look in `src/MariannaJ.tsx`.
+Se un'immagine non si carica, al suo posto compare un campione del tessuto nel colore del capo.
 
 ## Anteprima come Artifact (HTML singolo)
 
 ```bash
-npm run images     # scarica le foto Unsplash in artifact/img (serve accesso a images.unsplash.com)
-npm run artifact   # genera artifact/marianna-j.html con JS e CSS inline
+npm run artifact   # genera artifact/marianna-j.html con JS e CSS inline; le immagini si pubblicano da public/img
 ```
-
-Gli Artifact non caricano immagini da host esterni: per questo le foto vengono scaricate e servite in locale.
-Senza le foto, ogni immagine mostra un campione del tessuto nel colore del capo.
 
 ## Usarlo in un progetto TanStack Start / Lovable
 

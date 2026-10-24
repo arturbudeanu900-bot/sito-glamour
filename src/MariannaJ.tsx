@@ -54,12 +54,9 @@ const wa = (msg: string) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponen
 
 /* ─────────────────────────── Immagini ─────────────────────────── */
 
-// Foto da Unsplash. Nella build "artifact" le stesse foto vengono servite in locale da img/.
-const LOCAL_IMAGES =
-  typeof window !== "undefined" &&
-  (window as Window & { __MJ_LOCAL_IMAGES__?: boolean }).__MJ_LOCAL_IMAGES__ === true;
-const photo = (id: string, w = 1200) =>
-  LOCAL_IMAGES ? `img/${id}.jpg` : `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
+// Illustrazioni dell'atelier in public/img (generate da scripts/draw-images.cjs).
+// Per usare foto reali basta sostituire i file mantenendo gli stessi nomi.
+const photo = (name: string) => `img/${name}.jpg`;
 
 /* ─────────────────────────── Catalogo ─────────────────────────── */
 
@@ -94,7 +91,7 @@ const ITEMS: Item[] = [
     color: "Cammello",
     hex: "#A27B57",
     texture: "spina",
-    photo: "photo-1539533018447-63fcce2678e3",
+    photo: "c1",
     material: "Lana vergine e cashmere",
     composition: [["90%", "Lana vergine"], ["10%", "Cashmere"]],
     desc: "Monopetto lungo al polpaccio, rever a lancia e spalla morbida. Fodera in cupro e tasche a filetto.",
@@ -110,7 +107,7 @@ const ITEMS: Item[] = [
     color: "Antracite",
     hex: "#2E2F33",
     texture: "gessato",
-    photo: "photo-1594938298603-c8148c4dae35",
+    photo: "c2",
     material: "Lana merino Super 120's",
     composition: [["100%", "Lana merino"]],
     desc: "Doppiopetto a sei bottoni in corno, gessato sottile tono su tono, spalla costruita.",
@@ -126,7 +123,7 @@ const ITEMS: Item[] = [
     color: "Sabbia",
     hex: "#B9A27E",
     texture: "twill",
-    photo: "photo-1591369822096-ffd140ec948f",
+    photo: "c3",
     material: "Gabardine di cotone",
     composition: [["100%", "Cotone"]],
     desc: "Doppiopetto con cintura, carré antipioggia e polsini regolabili. Gabardine compatto e idrorepellente.",
@@ -142,7 +139,7 @@ const ITEMS: Item[] = [
     color: "Avorio",
     hex: "#E6DCC8",
     texture: "seta",
-    photo: "photo-1564257631407-4deb1f99d992",
+    photo: "t1",
     material: "Seta crêpe de chine",
     composition: [["100%", "Seta"]],
     desc: "Collo morbido con fiocco da annodare, polsini a tre bottoni, caduta fluida.",
@@ -158,7 +155,7 @@ const ITEMS: Item[] = [
     color: "Nero",
     hex: "#1A1A1A",
     texture: "costa",
-    photo: "photo-1608234807905-4466023792f5",
+    photo: "t2",
     material: "Lana merino extrafine",
     composition: [["100%", "Lana merino extrafine"]],
     desc: "Collo alto a costa inglese, maglia sottile che non ingombra sotto la giacca.",
@@ -174,7 +171,7 @@ const ITEMS: Item[] = [
     color: "Grigio perla",
     hex: "#B4B0A8",
     texture: "costa",
-    photo: "photo-1620799140408-edc6dcb6d633",
+    photo: "t3",
     material: "Cashmere",
     composition: [["100%", "Cashmere"]],
     desc: "Scollo a V, bottoni in madreperla, bordi a costa 2×2.",
@@ -190,7 +187,7 @@ const ITEMS: Item[] = [
     color: "Grigio melange",
     hex: "#6B6966",
     texture: "flanella",
-    photo: "photo-1594633312681-425c7b97ccd1",
+    photo: "p1",
     material: "Flanella di lana",
     composition: [["98%", "Lana"], ["2%", "Elastan"]],
     desc: "Vita alta con doppia pince, gamba ampia e piega stirata. Cade dritto fino a terra.",
@@ -206,7 +203,7 @@ const ITEMS: Item[] = [
     color: "Nero",
     hex: "#161616",
     texture: "twill",
-    photo: "photo-1506629082955-511b1aa562c8",
+    photo: "p2",
     material: "Lana fresca",
     composition: [["100%", "Lana vergine"]],
     desc: "Taglio a sigaretta, piega centrale e tasche alla francese.",
@@ -222,7 +219,7 @@ const ITEMS: Item[] = [
     color: "Indaco",
     hex: "#2C3A55",
     texture: "denim",
-    photo: "photo-1541099649105-f69ad21f3246",
+    photo: "p3",
     material: "Denim cimosato 13 oz",
     composition: [["100%", "Cotone"]],
     desc: "Vita alta, gamba ampia, lavaggio scuro uniforme. Cuciture a contrasto tono su tono.",
@@ -238,7 +235,7 @@ const ITEMS: Item[] = [
     color: "Cuoio",
     hex: "#7A4A2B",
     texture: "pelle",
-    photo: "photo-1548036328-c9fa89d128fa",
+    photo: "a1",
     material: "Pelle di vitello liscia",
     composition: [["Esterno", "Pelle di vitello"], ["Fodera", "Suede"]],
     desc: "Manico rigido, tracolla removibile e chiusura metallica dorata.",
@@ -254,7 +251,7 @@ const ITEMS: Item[] = [
     color: "Nero",
     hex: "#111111",
     texture: "pelle",
-    photo: "photo-1543163521-1bf539c55dd2",
+    photo: "a2",
     material: "Pelle nappa",
     composition: [["Tomaia", "Pelle nappa"], ["Suola", "Cuoio"]],
     desc: "Tacco a blocco di 6 cm, zip interna e punta squadrata.",
@@ -270,7 +267,7 @@ const ITEMS: Item[] = [
     color: "Cammello chiaro",
     hex: "#C3A27A",
     texture: "flanella",
-    photo: "photo-1520903920243-00d872a2d1c9",
+    photo: "a3",
     material: "Cashmere",
     composition: [["100%", "Cashmere"]],
     desc: "Grande stola con frange, tessuta leggera: sciarpa o mantella sulle spalle.",
@@ -302,43 +299,43 @@ type Look = {
   pins: Pin[];
 };
 
-// Coordinate dei pin in percentuale sulla foto originale (non sul riquadro ritagliato).
+// Coordinate dei pin in percentuale sull'immagine originale (non sul riquadro ritagliato).
 const LOOKS: Look[] = [
   {
     id: "01",
     title: "Look 01",
     line: "Cammello e flanella, per le sere d’autunno",
-    photo: "photo-1509631179647-0177331693ae",
-    w: 3648,
-    h: 5472,
-    pos: [0.5, 0.35],
+    photo: "look-01",
+    w: 1950,
+    h: 1300,
+    pos: [0.58, 0.5],
     tone: "#2B2621",
     pins: [
-      { id: "c1", x: 44, y: 40 },
-      { id: "t2", x: 52, y: 25 },
-      { id: "p1", x: 48, y: 72 },
-      { id: "a1", x: 30, y: 58 },
+      { id: "c1", x: 53.4, y: 64 },
+      { id: "t2", x: 58, y: 27.7 },
+      { id: "p1", x: 62.6, y: 83.6 },
+      { id: "a1", x: 50, y: 57.6 },
     ],
   },
   {
     id: "02",
     title: "Look 02",
     line: "Gessato e seta avorio, dal giorno alla sera",
-    photo: "photo-1539109136881-3be0616acf4b",
-    w: 3456,
-    h: 5184,
-    pos: [0.5, 0.3],
+    photo: "look-02",
+    w: 1950,
+    h: 1300,
+    pos: [0.43, 0.5],
     tone: "#24252A",
     pins: [
-      { id: "c2", x: 42, y: 38 },
-      { id: "t1", x: 52, y: 28 },
-      { id: "p2", x: 50, y: 70 },
-      { id: "a2", x: 46, y: 90 },
+      { id: "c2", x: 38.6, y: 37.5 },
+      { id: "t1", x: 41.8, y: 24.4 },
+      { id: "p2", x: 40.2, y: 68.9 },
+      { id: "a2", x: 45.3, y: 91.8 },
     ],
   },
 ];
 
-const HERO = { photo: "photo-1515886657613-9f3515b0c78f", tone: "#1E1C1A", item: "c1" };
+const HERO = { photo: "hero", tone: "#1E1C1A", item: "c1" };
 
 const TICKER: { t: string; k: "mono" | "serif" | "sans" }[] = [
   { t: "45°11′N 7°53′E", k: "mono" },
@@ -800,9 +797,10 @@ function Photo({ src, alt, tone, texture = "flanella", caption, className = "", 
     } else setState("wait");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [src]);
+  const position = /\b(absolute|fixed)\b/.test(className) ? "" : "relative";
   return (
     <span
-      className={`relative block overflow-hidden ${className}`}
+      className={`${position} block overflow-hidden ${className}`}
       style={{
         backgroundColor: tone,
         backgroundImage: `${TEXTURE[texture]}, linear-gradient(155deg, ${shade(tone, 1.18)} 0%, ${tone} 46%, ${shade(tone, 0.5)} 100%)`,
@@ -1104,8 +1102,8 @@ function Hero({ onOpen }: { onOpen: (item: Item) => void }) {
                 className="mj-frame relative aspect-[4/5] w-full overflow-hidden lg:aspect-auto lg:h-full"
               >
                 <Photo
-                  src={photo(HERO.photo, 1400)}
-                  alt="Modella in cappotto cammello, editoriale Autunno/Inverno di Marianna J"
+                  src={photo(HERO.photo)}
+                  alt="Figurino dell'atelier: cappotto cammello, dolcevita nero, pantalone palazzo e borsa bauletto"
                   tone={HERO.tone}
                   texture="spina"
                   eager
@@ -1114,7 +1112,7 @@ function Hero({ onOpen }: { onOpen: (item: Item) => void }) {
                 />
                 <span className="mj-spot absolute inset-0 block">
                   <Photo
-                    src={photo(HERO.photo, 1400)}
+                    src={photo(HERO.photo)}
                     alt=""
                     tone={heroItem.hex}
                     texture="spina"
@@ -1237,7 +1235,7 @@ function Lookbook({ onOpen, onTry }: { onOpen: (item: Item) => void; onTry: (ite
   const cardStyle: CSSProperties = !cur
     ? {}
     : mobile
-      ? { left: 12, right: 12, bottom: 12 }
+      ? { left: 12, right: 12, bottom: 88 }
       : {
           width: CARD_W,
           left: cur.x < box.w * 0.55 ? cur.x + 36 : cur.x - 36 - CARD_W,
@@ -1245,18 +1243,30 @@ function Lookbook({ onOpen, onTry }: { onOpen: (item: Item) => void; onTry: (ite
         };
 
   const step = (d: number) => setLi((i) => (i + d + LOOKS.length) % LOOKS.length);
+  const switcher = (
+    <div className="flex items-center gap-3">
+      <button type="button" onClick={() => step(-1)} className="grid h-11 w-11 place-items-center rounded-full border border-cream/25 bg-void/40 text-cream backdrop-blur-md transition-colors hover:bg-cream hover:text-ink" aria-label="Look precedente">
+        <ArrowLeft className="h-4 w-4" strokeWidth={1.4} />
+      </button>
+      <span className="f-mono min-w-[64px] text-center text-[12px] tracking-[.2em] text-cream">
+        {look.id} / {String(LOOKS.length).padStart(2, "0")}
+      </span>
+      <button type="button" onClick={() => step(1)} className="grid h-11 w-11 place-items-center rounded-full border border-cream/25 bg-void/40 text-cream backdrop-blur-md transition-colors hover:bg-cream hover:text-ink" aria-label="Look successivo">
+        <ArrowRight className="h-4 w-4" strokeWidth={1.4} />
+      </button>
+    </div>
+  );
 
   return (
     <section id="lookbook" className="relative scroll-mt-0 bg-void">
       <div ref={frame} className="relative h-[100svh] max-h-[1100px] min-h-[640px] overflow-hidden" onClick={() => setActive(null)}>
         <div key={look.id} className="mj-fade absolute inset-0">
           <Photo
-            src={photo(look.photo, 2000)}
+            src={photo(look.photo)}
             alt={`${look.title}: ${look.line}`}
             tone={look.tone}
             texture="flanella"
             className="absolute inset-0"
-            imgClassName="mj-kb"
             imgStyle={{ objectPosition: `${look.pos[0] * 100}% ${look.pos[1] * 100}%` }}
             onReady={(w, h) => setNat({ w, h })}
           />
@@ -1271,6 +1281,11 @@ function Lookbook({ onOpen, onTry }: { onOpen: (item: Item) => void; onTry: (ite
           </h2>
           <p className="f-serif mt-3 max-w-md text-[18px] italic text-cream/75 md:text-[22px]">{look.line}</p>
           <p className="f-mono mt-6 hidden text-[10.5px] uppercase tracking-[.22em] text-steel md:block">Tocca i punti sui capi per aprirne il dettaglio</p>
+          {mobile && (
+            <div className="pointer-events-auto mt-5" onClick={(e) => e.stopPropagation()}>
+              {switcher}
+            </div>
+          )}
         </div>
 
         {pins.map((p) =>
@@ -1314,7 +1329,7 @@ function Lookbook({ onOpen, onTry }: { onOpen: (item: Item) => void; onTry: (ite
             <Tilt max={6} className="mj-glass relative rounded-[3px] p-4">
               <div className="relative z-10 flex gap-4">
                 <Photo
-                  src={photo(cur.item.photo, 400)}
+                  src={photo(cur.item.photo)}
                   alt={cur.item.name}
                   tone={cur.item.hex}
                   texture={cur.item.texture}
@@ -1358,20 +1373,11 @@ function Lookbook({ onOpen, onTry }: { onOpen: (item: Item) => void; onTry: (ite
           </div>
         )}
 
-        <div
-          className={`absolute z-20 flex items-center gap-3 ${mobile ? "right-3 top-[calc(84px+env(safe-area-inset-top,0px))]" : "bottom-8 right-[max(40px,env(safe-area-inset-right,0px))]"}`}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <button type="button" onClick={() => step(-1)} className="grid h-11 w-11 place-items-center rounded-full border border-cream/25 bg-void/40 text-cream backdrop-blur-md transition-colors hover:bg-cream hover:text-ink" aria-label="Look precedente">
-            <ArrowLeft className="h-4 w-4" strokeWidth={1.4} />
-          </button>
-          <span className="f-mono min-w-[64px] text-center text-[12px] tracking-[.2em] text-cream">
-            {look.id} / {String(LOOKS.length).padStart(2, "0")}
-          </span>
-          <button type="button" onClick={() => step(1)} className="grid h-11 w-11 place-items-center rounded-full border border-cream/25 bg-void/40 text-cream backdrop-blur-md transition-colors hover:bg-cream hover:text-ink" aria-label="Look successivo">
-            <ArrowRight className="h-4 w-4" strokeWidth={1.4} />
-          </button>
-        </div>
+        {!mobile && (
+          <div className="absolute bottom-8 right-[max(40px,env(safe-area-inset-right,0px))] z-20" onClick={(e) => e.stopPropagation()}>
+            {switcher}
+          </div>
+        )}
       </div>
     </section>
   );
@@ -1385,7 +1391,7 @@ function ProductCard({ item, index, onOpen }: { item: Item; index: number; onOpe
       <Tilt max={7} className="relative overflow-hidden rounded-[2px]">
         <button type="button" onClick={() => onOpen(item)} data-cursor="Scopri" className="group block w-full text-left" aria-label={`${item.name}, ${eur(item.price)}`}>
           <Photo
-            src={photo(item.photo, 900)}
+            src={photo(item.photo)}
             alt={item.name}
             tone={item.hex}
             texture={item.texture}
@@ -1562,7 +1568,7 @@ function MixMatch({ outfit, setOutfit, flash, onOpen }: { outfit: Outfit; setOut
                         <Tilt key={it.id} max={10} className={`relative rounded-[2px] ${flash === it.id ? "mj-flash" : ""}`}>
                           <button type="button" onClick={() => toggle(it)} aria-pressed={on} data-cursor={on ? "Togli" : "Scegli"} className="group block w-full text-left">
                             <Photo
-                              src={photo(it.photo, 600)}
+                              src={photo(it.photo)}
                               alt={it.name}
                               tone={it.hex}
                               texture={it.texture}
@@ -1611,7 +1617,7 @@ function MixMatch({ outfit, setOutfit, flash, onOpen }: { outfit: Outfit; setOut
                       <span key={c} className={`absolute block ${FRAME[c]}`}>
                         {it ? (
                           <button type="button" key={it.id} onClick={() => onOpen(it)} data-cursor="Scheda" className="mj-swap relative block h-full w-full shadow-[0_30px_60px_-24px_rgba(0,0,0,.9)]">
-                            <Photo src={photo(it.photo, 700)} alt={it.name} tone={it.hex} texture={it.texture} caption={it.name} className="h-full w-full border border-cream/15" />
+                            <Photo src={photo(it.photo)} alt={it.name} tone={it.hex} texture={it.texture} caption={it.name} className="h-full w-full border border-cream/15" />
                             <span className="f-mono absolute left-2 top-2 block rounded-full bg-void/65 px-2 py-1 text-[9px] uppercase tracking-[.2em] text-cream/85 backdrop-blur">{c}</span>
                           </button>
                         ) : (
@@ -1769,7 +1775,7 @@ function Drawer({ state, onClose, onTry }: { state: DrawerState; onClose: () => 
             }}
           >
             <Photo
-              src={photo(item.photo, 1200)}
+              src={photo(item.photo)}
               alt={item.name}
               tone={item.hex}
               texture={item.texture}

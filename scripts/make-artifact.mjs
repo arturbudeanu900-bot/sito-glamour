@@ -1,6 +1,6 @@
 // Converte dist-artifact/index.html (JS e CSS già inline) nel frammento HTML pubblicabile come Artifact:
-// niente doctype/html/head/body (li aggiunge la piattaforma), foto servite da artifact/img/ se presenti.
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+// niente doctype/html/head/body (li aggiunge la piattaforma). Le immagini si pubblicano accanto, da public/img.
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
 const SRC = "dist-artifact/index.html";
 const OUT_DIR = "artifact";
@@ -25,12 +25,6 @@ strip(/<meta name="viewport"[^>]*\/>/i);
 
 html = html.replace(/(<title>[^<]*<\/title>)/i, '$1\n    <meta name="claude:viewport-fit-sides" content="cover" />');
 
-const imgDir = `${OUT_DIR}/img`;
-const local = existsSync(imgDir) && readdirSync(imgDir).some((f) => f.endsWith(".jpg"));
-if (local) {
-  html = html.replace(/<script type="module"/i, "<script>window.__MJ_LOCAL_IMAGES__ = true;</script>\n    $&");
-}
-
 // Lo script del bundle va dopo #root: React monta su un nodo che esiste già.
 const script = html.match(/<script type="module"[\s\S]*?<\/script>/i);
 if (!script) throw new Error("Bundle JS non trovato");
@@ -39,4 +33,4 @@ html = `${html.trim()}\n    ${script[0]}\n`;
 
 mkdirSync(OUT_DIR, { recursive: true });
 writeFileSync(OUT, html);
-console.log(`${OUT} · ${(html.length / 1024).toFixed(0)} KB · foto ${local ? "locali (artifact/img)" : "da Unsplash"}`);
+console.log(`${OUT} · ${(html.length / 1024).toFixed(0)} KB`);
