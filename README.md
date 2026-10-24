@@ -6,25 +6,37 @@ Sito one-page per la boutique **Glamour Intimo & Abbigliamento di Botto Barbara*
 
 ```
 index.html            Pagina unica: hero, La Maison, Collezione (bento), Orari, Mappa, Contatti
-privacy.html          Privacy e cookie (l'informativa GDPR completa è da completare)
+privacy.html          Informativa privacy e cookie (GDPR art. 13), con revoca del consenso alla mappa
+404.html              Pagina "non trovata" autonoma, usata in automatico da GitHub Pages e Netlify
 assets/css/style.css  Stili del sito (layer "components" di Tailwind)
 assets/js/main.js     Interazioni: stato di apertura live, parallasse 3D, card inclinabili,
                       cursore, menu mobile, mappa su consenso, copia indirizzo
 assets/img/           Foto della boutique, favicon e icona Apple
 ```
 
-Nessuna build: basta aprire `index.html` o pubblicare la cartella su un qualsiasi hosting statico
-(GitHub Pages, Netlify, ecc.). Tailwind CSS v4, Lucide Icons e i Google Fonts arrivano da CDN.
+Nessuna build: basta aprire `index.html` o pubblicare la cartella su un qualsiasi hosting statico.
+Tailwind CSS v4, Lucide Icons e i Google Fonts arrivano da CDN.
+
+## Pubblicazione
+
+**GitHub Pages** (gratuito): dopo il merge su `main`, in *Settings → Pages* scegli
+*Deploy from a branch*, branch `main`, cartella `/ (root)`. Il sito sarà online in un paio di minuti
+all'indirizzo `https://<utente>.github.io/sito-glamour/`; da lì puoi collegare anche un dominio tuo.
+
+**Netlify**: trascina la cartella del progetto su app.netlify.com/drop.
 
 ## Da personalizzare
 
-- **Foto dell'hero**: salva una foto verticale 4:5 (almeno 1200 × 1500 px) in `assets/img/hero.jpg`:
-  comparirà automaticamente al posto del segnaposto.
+- **Foto dell'hero**: salva una foto verticale 4:5 (almeno 1200 × 1500 px) in `assets/img/hero.jpg`,
+  poi in `index.html` togli il commento alla riga `<img src="assets/img/hero.jpg" …>` dentro
+  `<figure class="hero-photo …">`: la foto coprirà il segnaposto.
 - **Foto della collezione**: le due immagini in `assets/img/` provengono dalla demo e sono a bassa
   risoluzione; sostituiscile con versioni più grandi mantenendo lo stesso nome file.
 - **Orari**: sono definiti in `assets/js/main.js` (oggetto `HOURS`, calcolo dello stato "Aperto ora"),
   nella tabella della sezione `#orari` e nel footer di `index.html`, e nei dati strutturati JSON-LD in `<head>`.
-- **Privacy**: completare l'informativa in `privacy.html` con il proprio consulente.
+- **Privacy**: in `privacy.html` indica il fornitore di hosting e la conservazione dei suoi registri
+  tecnici (voci tra parentesi quadre), fai verificare il testo al consulente e poi elimina il riquadro
+  «Prima della pubblicazione».
 
 ## Dati aziendali usati
 

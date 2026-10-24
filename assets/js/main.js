@@ -329,7 +329,7 @@
         pos.x = e.clientX; pos.y = e.clientY;
         cursor.classList.add('is-visible');
       });
-      document.addEventListener('pointerleave', function () { cursor.classList.remove('is-visible'); });
+      document.documentElement.addEventListener('mouseleave', function () { cursor.classList.remove('is-visible'); });
       (function loop() {
         cur.x += (pos.x - cur.x) * 0.2;
         cur.y += (pos.y - cur.y) * 0.2;

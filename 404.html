@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Pagina non trovata · Glamour Intimo &amp; Abbigliamento</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Jost:wght@300;400;500&amp;display=swap">
+  <!-- Pagina autonoma: può essere servita a qualsiasi profondità di percorso, quindi niente file locali -->
+  <style>
+    :root { --ink: #0A0A0A; --silk: #A7A29C; --gold: #C5A46D; --satin: linear-gradient(115deg, #A8854D 0%, #D9BF8B 26%, #B8955A 50%, #E4CFA0 74%, #A8854D 100%); }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; display: grid; place-items: center; padding: 24px 16px;
+      background: var(--ink); color: #fff; font-family: "Jost", system-ui, sans-serif; text-align: center;
+    }
+    .brand { font-family: "Cormorant Garamond", Georgia, serif; font-size: 22px; letter-spacing: .32em; margin-right: -.32em; color: var(--gold); }
+    .code {
+      margin: 32px 0 0; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 300; font-style: italic;
+      font-size: clamp(7rem, 30vw, 14rem); line-height: .8;
+      background: var(--satin); -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    h1 { margin: 28px 0 0; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 300; font-size: clamp(2rem, 6vw, 3rem); line-height: 1.1; }
+    p { margin: 14px auto 0; max-width: 26rem; font-size: 16px; font-weight: 300; line-height: 1.7; color: var(--silk); }
+    .actions { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .btn {
+      display: inline-flex; align-items: center; height: 50px; padding: 0 26px; border-radius: 999px;
+      font-size: 11px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; text-decoration: none;
+      transition: transform .5s cubic-bezier(.22,1,.36,1), background-color .4s, color .4s;
+    }
+    .btn--satin { background: var(--satin); color: var(--ink); }
+    .btn--ghost { border: 1px solid rgba(255,255,255,.25); color: #fff; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn--ghost:hover { background: #fff; color: var(--ink); }
+    :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand">GLAMOUR</div>
+    <p class="code" aria-hidden="true">404</p>
+    <h1>Questa pagina non esiste</h1>
+    <p>Il collegamento potrebbe essere cambiato. Torna alla boutique o scrivici: ti aiutiamo noi.</p>
+    <div class="actions">
+      <a class="btn btn--satin" id="homeLink" href="/">Torna al sito</a>
+      <a class="btn btn--ghost" href="https://wa.me/393932841156" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </main>
+  <script>
+    // Su GitHub Pages il sito vive in /<nome-repository>/: il link "Torna al sito" punta lì.
+    (function () {
+      var link = document.getElementById('homeLink');
+      if (/\.github\.io$/.test(location.hostname)) {
+        var first = location.pathname.split('/')[1];
+        if (first) link.href = '/' + first + '/';
+      }
+    })();
+  </script>
+</body>
+</html>
